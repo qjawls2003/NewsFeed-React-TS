@@ -1,33 +1,54 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Feed } from './model';
 import NewsFeeds from './components/NewsFeeds';
 
 
 const App:React.FC = () => {
   const [date,setDay] = useState<Date>(new Date());
-
-  const handleClick = (e:FormEvent) => {
+  const [showNextButton, setShowNextButton] = useState<boolean>(false);
+  const [showBackButton, setShowBackButton] = useState<boolean>(true);
+  
+  const handleClick = (e:FormEvent,type:string) => {
     e.preventDefault();
     const newDate = new Date();
-    newDate.setDate(date.getDate()-1);
-    setDay(newDate);
-    console.log(newDate);
+    const curDate = new Date();
+    if (type === 'Back'){
+      newDate.setDate(date.getDate()-1);
+      curDate.setDate(curDate.getDate()-7);
+      console.log(curDate.toDateString())
+      console.log(newDate.toDateString())
+      if (curDate.toDateString() === newDate.toDateString()) {
+        setShowBackButton(false);
+        setDay(newDate);
+      } else {
+        setShowNextButton(true);
+        setShowBackButton(true);
+        setDay(newDate);
+      }
+    } else {
+      newDate.setDate(date.getDate()+1);
+      if (curDate.toDateString() === newDate.toDateString()) {
+        setShowNextButton(false);
+      }
+      setShowBackButton(true);
+      setDay(newDate);
+    }
+      
   }
 
   useEffect(() => {
-    // Your code that depends on the updated state
     console.log('Date has been updated:', date);
   }, [date]);
 
   return (
     <div className="App">
       <header className="header">
-        Title: CyberNewsFeed
+        Encrypted Briefs
       </header>
       <div>
-        <button onClick={handleClick}>Yesterday</button>
+        {showNextButton &&<button onClick={(event)=>handleClick(event,'Next')}>Next</button>}
+        {showBackButton &&<button onClick={(event)=>handleClick(event,'Back')}>Back</button>}
+        <p>{date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()}</p>
         <NewsFeeds date={date} setDay={setDay}/>
       </div>
     </div>

@@ -1,0 +1,59 @@
+/* Basic styling for the news summary container */
+.news-summary {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* Styling for the news image */
+  .news-image {
+    width: 250px; /* Set a fixed width or adjust as needed */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 4px;
+    margin-right: 16px; /* Add some space between the image and text */
+  }
+  
+  /* Styling for the news text container */
+  .news-text-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allow the text container to grow and take up remaining space */
+  }
+  
+  /* Styling for the news title */
+  .news-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  .news-date {
+    font-size: 0.8em;
+    color: #777;
+    margin-bottom: 8px;
+  }
+  
+  
+  /* Styling for the read more link */
+  .read-more {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 8px;
+  }
+  
+  .read-more:hover {
+    text-decoration: underline;
+  }
+
+  .news-summary:hover {
+    transform: scale(1.05);
+  }
+  

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Feed } from '../model'
+import React, { useState } from 'react';import { Feed } from '../model'
+import './styles.css'
 
 interface props {
     feed:Feed
@@ -7,12 +7,19 @@ interface props {
 }
 
 const SingleFeed:React.FC<props> = ({feed,date}) => {
-  const wantedDate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
-  console.log(wantedDate); 
+  const [isExpanded,setIsExpanded] = useState<boolean>(false);
+  
   return (
-    <div>
-      <p>{feed.title} Posted: {feed.date}</p>
+    <div className="news-summary">
+      <img className="news-image" src={feed.imageURL} alt="News Image"/>
+      <div className="news-text-container">
+        <h2 className="news-title">{feed.title}</h2>
+        <p className="news-date">{feed.date}</p>
+        <a href="#" className="read-more">Read More</a>
+      </div>
     </div>
+
+
   )
 }
 
