@@ -1,7 +1,8 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import './App.css';
 import NewsFeeds from './components/NewsFeeds';
-
+import { Link } from 'react-router-dom'; 
+import NewsCard from './components/NewsCard';
 
 const App:React.FC = () => {
   const [date,setDay] = useState<Date>(new Date());
@@ -42,15 +43,13 @@ const App:React.FC = () => {
 
   return (
     <div className="App">
-      <header className="header">
-        Encrypted Briefs
-      </header>
       <div>
         {showNextButton &&<button onClick={(event)=>handleClick(event,'Next')}>Next</button>}
         {showBackButton &&<button onClick={(event)=>handleClick(event,'Back')}>Back</button>}
-        <p>{date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()}</p>
-        <NewsFeeds date={date} setDay={setDay}/>
+        <p className='date'>{date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()}</p>
       </div>
+      <NewsFeeds date={date} setDay={setDay}/>
+      <NewsCard/>
     </div>
   );
 }

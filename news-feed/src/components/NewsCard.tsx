@@ -1,11 +1,11 @@
 import React from 'react'
 
-const InputDate = () => {
+const NewsCard = () => {
   return (
     <div>
-      a
+      empty
     </div>
   )
 }
 
-export default InputDate
+export default NewsCard

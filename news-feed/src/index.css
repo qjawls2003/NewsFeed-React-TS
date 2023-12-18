@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.date {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  color: #333;
+  justify-content: center;
+}

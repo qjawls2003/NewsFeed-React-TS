@@ -12,7 +12,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay}) => {
     console.log(wantedDate); 
 
     return (
-        <div>
+        <div className='items__list'>
         {db.articles.filter(item => item.date===wantedDate).map((feed: Feed) => (
                 <SingleFeed feed={feed} date={date}/>))
         }

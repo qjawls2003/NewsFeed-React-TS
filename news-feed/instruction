@@ -1,0 +1,22 @@
+sudo apt upgrade
+sudo apt install npm
+#goto folder
+sudo npm install -g npx
+sudo npm install -g n
+sudo n stable
+npx create-react-app my-app --template typescript
+
+#Install these in my-app folder. node_modules in the parent folder will crash the app
+#npm audit fix --audit 
+npm install react-icons
+(extensions Es7 React -> type "rafce" on new files)
+
+For icons -> https://react-icons.github.io/react-icons/
+
+https://www.npmjs.com/package/react-beautiful-dnd
+npm i react-beautiful-dnd
+npm i @types/react-beautiful-dnd
+
+
+npm i react-router-dom
+npm audit fix --force
