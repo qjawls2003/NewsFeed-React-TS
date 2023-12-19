@@ -1,6 +1,5 @@
 // S3Service.ts
 import AWS from 'aws-sdk';
-import '../content/aws-config'
 
 const s3 = new AWS.S3();
 
