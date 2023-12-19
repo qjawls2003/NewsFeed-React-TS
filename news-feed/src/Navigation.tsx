@@ -10,10 +10,10 @@ const Navigation: React.FC = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <Link to="https://github.com/qjawls2003" target="_blank" rel="noopener noreferrer">Github</Link>
         </li>
         <li>
-          <Link to="/contact">Contact</Link>
+          <Link to="https://www.linkedin.com/in/daniel-beom-an/" target="_blank" rel="noopener noreferrer">LinkedIn</Link>
         </li>
       </ul>
     </nav>

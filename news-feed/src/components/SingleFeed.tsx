@@ -17,7 +17,13 @@ const SingleFeed:React.FC<props> = ({feed,date, newsCard, setNewsCard}) => {
 
   return (
     <div className="news-summary" onClick={displayNewsCard}>
-      <img className="news-image" src={feed.imageURL} alt="News" />
+      <img className="news-image" src={feed.imageURL}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "etracing.png";
+                target.className = "news-image"
+              }}
+      />
       <div className="news-details">
         <div className="news-title-container">
           <h2 className="news-title">{feed.title}</h2>
