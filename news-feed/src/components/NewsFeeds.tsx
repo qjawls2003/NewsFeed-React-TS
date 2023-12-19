@@ -6,15 +6,15 @@ import SingleFeed from './SingleFeed';
 interface prop {
     date:Date;
     setDay:React.Dispatch<React.SetStateAction<Date>>;
+    newsCard:Feed,
+    setNewsCard:React.Dispatch<React.SetStateAction<Feed>>
 }
-const NewsFeeds: React.FC<prop> = ({date,setDay}) => {
-    const wantedDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate()
-    console.log(wantedDate); 
-
+const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard}) => {
+    
     return (
         <div className='items__list'>
-        {db.articles.filter(item => item.date===wantedDate).map((feed: Feed) => (
-                <SingleFeed feed={feed} date={date}/>))
+        {db.map((feed: Feed) => (
+                <SingleFeed feed={feed} date={date} newsCard={newsCard} setNewsCard={setNewsCard}/>))
         }
         </div>
   )
