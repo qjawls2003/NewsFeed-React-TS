@@ -18,9 +18,16 @@ const NewsCard: React.FC<prop> = ({newsCard,setNewsCard}) => {
 
     return (
         <div className='news__card' onClick={handleClick}>
-          <h2>{newsCard.title}</h2>
-          <p>{newsCard.date_published}</p>
+          <h2 className='card__title'>{newsCard.title}</h2>
+          <p className='card__date'>{newsCard.date_published}</p>
           <p className='news__card__summary'>{newsCard.article}</p>
+          <img className="news-image" src={newsCard.imageURL}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "etracing.png";
+                target.className = "news-image"
+              }}
+      />
         </div>
   )
 }
