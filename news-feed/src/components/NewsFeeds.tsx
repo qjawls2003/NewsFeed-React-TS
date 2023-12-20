@@ -20,7 +20,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard}) => {
           try {
             const data = await fetchJsonFromS3({
               bucketName: 'blognewsarticles',
-              key: wantedDate + '.json',
+              key: wantedDate,
             });
             db.push(data);
             setJsonData(data);
