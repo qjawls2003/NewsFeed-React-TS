@@ -23,4 +23,9 @@ npm install @types/react-router-dom --save-dev
 npm audit fix --force
 
 #S3
-npm install aws-amplify @aws-amplify/ui-react aws-amplify-react
+npm install aws-sdk
+
+#nginx
+I built nginx from source code, add ExecStartPost=/bin/sleep 0.1 in /etc/systemd/system/nginx.service.
+
+
