@@ -20,23 +20,28 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard}) => {
           try {
             const url = s3 + wantedDate
             const response = await fetch(url);
+            console.log(response);
             if (response.ok) {
                 const data = await response.json()
-                console.log(data);
-                db.push(data);
-                setJsonData(data);
-            } else { //when you are at next day and there are no new articles
-                const curDate = new Date();
-                curDate.setDate(date.getDate()-1);
-                const yesterday = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
-                const url = s3 + yesterday
-                const response = await fetch(url);
-                if (response.ok) {
-                    const data = await response.json()
-                    console.log(data);
+                if (data.length > 0) {
+                    console.log(data.length);
                     db.push(data);
                     setJsonData(data);
-                } 
+                } else { //when you are at next day and there are no new articles
+                    console.log("Today not Found")
+                    const curDate = new Date();
+                    curDate.setDate(date.getDate()-1);
+                    const yesterday = curDate.getFullYear() + "-" + (curDate.getMonth()+1) + "-" + curDate.getDate();
+                    const url = s3 + yesterday
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        const data = await response.json()
+                        console.log(data.length);
+                        console.log(data);
+                        db.push(data);
+                        setJsonData(data);
+                }
+            } 
             }
           } catch (error) {
             console.error('Error fetching JSON:', error);
