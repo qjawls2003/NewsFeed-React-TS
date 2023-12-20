@@ -42,7 +42,21 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard}) => {
                         setJsonData(data);
                 }
             } 
+            } else {
+                console.log("Today not Found")
+                const curDate = new Date();
+                curDate.setDate(date.getDate()-1);
+                const yesterday = curDate.getFullYear() + "-" + (curDate.getMonth()+1) + "-" + curDate.getDate();
+                const url = s3 + yesterday
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json()
+                    console.log(data.length);
+                    console.log(data);
+                    db.push(data);
+                    setJsonData(data);
             }
+        }
           } catch (error) {
             console.error('Error fetching JSON:', error);
           }
