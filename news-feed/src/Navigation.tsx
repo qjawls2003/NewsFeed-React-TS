@@ -4,6 +4,7 @@ import './styles.css'
 
 const Navigation: React.FC = () => {
   return (
+    <div className='header'>
     <nav>
       <ul>
         <li>
@@ -15,8 +16,12 @@ const Navigation: React.FC = () => {
         <li>
           <Link to="https://www.linkedin.com/in/daniel-beom-an/" target="_blank" rel="noopener noreferrer">LinkedIn</Link>
         </li>
+        <li>
+          <Link to="https://medium.com/etracing" target="_blank" rel="noopener noreferrer">Medium</Link>
+        </li>
       </ul>
     </nav>
+    </div>
   );
 };
 
