@@ -1,7 +1,8 @@
 // S3Service.ts
 import * as AWS from 'aws-sdk';
 
-AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+AWS.config.credentials = credentials;
 
 const s3 = new AWS.S3();
 
