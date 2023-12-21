@@ -20,7 +20,7 @@ const NewsCard: React.FC<prop> = ({newsCard,setNewsCard}) => {
         <div className='news__card' onClick={handleClick}>
           <h2 className='card__title'>{newsCard.title}</h2>
           <p className='card__date'>{newsCard.date_published}</p>
-          <img className="news-image" src={newsCard.imageURL}
+          <img className="card__image"  src={newsCard.imageURL}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = "etracing.png";

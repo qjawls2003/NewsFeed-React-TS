@@ -59,3 +59,9 @@
 .logo:hover {
     transform: scale(1.03);
 }
+
+@media (max-width: 768px) {
+  nav ul {
+    font-size: 12px;
+  }
+}
