@@ -8,6 +8,7 @@
 .column {
     flex: 1;
     padding: 20px;
+    margin-top: 100px;
 }
 
 .items__list {
@@ -54,6 +55,7 @@
 
 .news__card:hover {
     transform: scale(1.005);
+    z-index: 2;
 }
 
 .news-summary {
@@ -117,7 +119,7 @@
     background-color: #54a3d3;
     color: #000000;
     text-decoration: none;
-    border-radius: 10px;
+    border-radius: 4px;
     transition: background-color 0.3s ease;
     font-size: 20px;
     font-family: 'Oswald';

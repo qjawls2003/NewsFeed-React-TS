@@ -84,7 +84,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard}) => {
     return (
         <div className='items__list'>
         {renderItems(db)}
-        <button className='read-more-btn' onClick={loadMore}>Read More</button>
+        <button className='read-more-btn' onClick={loadMore}>More Stories</button>
         </div>
   )
 }

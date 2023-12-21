@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
 .App {
     text-align: center;
   }
@@ -8,26 +7,36 @@
     background-color: rgb(97, 161, 216);
   }
 
-header {
-    background-color: #333;
+.header__main {
+  background-color: white;
+  position:fixed;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+.header {
     color: #fff;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
+    margin: 0px;
   }
-  
+
   nav ul {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
-    font-size: 25px;
-    margin: 10px 0;
+    padding: 10px;
+    margin-top: 25px;
+    margin-left: 125px;
+    font-size: 20px;
+    float: left;
   }
   
   nav li {
-    display: inline;
-    margin-right: 25px;
-    position: relative;
-    font-family: "DS+Sans";
+    display:inline-block;
+    margin-right: 20px;
+    position:relative;
+    font-family: "Oswald";
   }
   
   nav a {
@@ -35,13 +44,16 @@ header {
     color: black;
   }
 
+  .logo_div {
+    float:flex;
+    position:fixed;
+  }
 
 .logo{
     position: relative;
     cursor: pointer;
     top: 1vh;
     height: 7vh;
-    margin-bottom: 10px;
   }
 
 .logo:hover {

@@ -10,8 +10,8 @@ const Header: React.FC = () => {
         };
 
   return (
-    <div>
-    <div onClick={refreshPage}>
+    <div className='header__main'>
+    <div onClick={refreshPage} className='logo_div'>
       <img className="logo" src="etracing.png" alt='reload'></img>
     </div>
     <Navigation />
