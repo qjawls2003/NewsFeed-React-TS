@@ -8,7 +8,7 @@ const Navigation: React.FC = () => {
     <nav>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="https://medium.com/etracing/building-an-automated-news-website-4f17abdd2c81" target="_blank" rel="noopener noreferrer">About</Link>
         </li>
         <li>
           <Link to="https://github.com/qjawls2003" target="_blank" rel="noopener noreferrer">Github</Link>
