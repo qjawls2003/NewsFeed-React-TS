@@ -24,7 +24,7 @@
     position:fixed;
     font-family: Arial, sans-serif;
     height: 100vh;
-    width: 90vh;
+    width: 40vw;
     max-width: 100%;
     font-size: 24px;
     color: #333;
@@ -63,7 +63,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    width: 90vh;
+    width: 45vw;
     margin: 10px;
     padding: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
