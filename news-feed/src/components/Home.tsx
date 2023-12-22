@@ -20,12 +20,13 @@ const Home:React.FC = () => {
     useEffect(() => {
       console.log('Date has been updated:', date);
     }, [date]);
+    
     return (
     <div className="container">
         <div className='column'>
             <NewsFeeds date={date} setDay={setDay} newsCard={newsCard} setNewsCard={setNewsCard} more={more} setMore={setMore}/>
         </div>
-        <div className='column'>
+        <div className='column__card'>
             <NewsCard newsCard={newsCard} setNewsCard={setNewsCard}/>
         </div>
       </div>

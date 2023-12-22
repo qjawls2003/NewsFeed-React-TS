@@ -63,5 +63,6 @@
 @media (max-width: 768px) {
   nav ul {
     font-size: 12px;
+    margin-left: 100px;
   }
 }

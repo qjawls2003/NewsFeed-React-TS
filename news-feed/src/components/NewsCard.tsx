@@ -24,7 +24,7 @@ const NewsCard: React.FC<prop> = ({newsCard,setNewsCard}) => {
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = "etracing.png";
-                target.className = "news-image"
+                target.className = "card__image"
               }}
           />
           <p className='news__card__summary'>{newsCard.article}</p>

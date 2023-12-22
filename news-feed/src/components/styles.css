@@ -11,6 +11,12 @@
     margin-top: 100px;
 }
 
+.column__card {
+    flex: 1;
+    padding: 20px;
+    margin-top: 100px;
+}
+
 .items__list {
     align-items: center;
     justify-content: center;
@@ -23,8 +29,8 @@
 .news__card {
     position:fixed;
     font-family: Arial, sans-serif;
-    height: 60vh;
-    width: 40vw;
+    height: 60%;
+    width: 45%;
     max-width: 100%;
     font-size: 24px;
     color: #333;
@@ -63,7 +69,7 @@
     display: flex;
     border: 1px solid #ddd;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: auto;
     width: 45vw;
     max-width: 100%;
     margin: 10px;
@@ -155,32 +161,43 @@
         margin-top: 0;
         padding: 25px;
     }
+    .column__card {
+        margin-top: 0px;
+    }
     .news-image {
-        width: 100px; 
-        height: 75px; 
+        width: 120px; 
+        height: 70px; 
     }
     .news-title {
         font-size: 15px;
+        overflow-wrap: normal;
     }
     .news-summary {
-        max-width: 100%;
+        margin-right: 10px;
         width: 75vw;
+        height: 50%;
+    }
+    .news-date {
+        font-size: 12px;
     }
     .items__list {
         margin-top: 75px;
-        align-items: center;
-        justify-content: center;
-        height: 45vh;
+        height: 50%;
         color: #333;
-        overflow: auto;
+        overflow-x:auto;
+        flex-direction: row;
+        display:-webkit-inline-box;
+        max-width: 100%;
     }
     .news__card {
-        width: 100vw;
+        width: 90vw;
+        height: 100vw;
         max-width: 100%;
         font-size: 12px;
         margin: 0px;
         padding: 0px;
-        position: relative;
+        overflow-y: auto;
+        
     }
     .card__title {
         font-size: 15px;
@@ -192,7 +209,10 @@
 
     }
     .card__image {
-        width: 0px; 
-        height: 0px; 
+        width: 120px; 
+        height: 70px; 
+    }
+    .read-more-btn {
+        margin-top: 50%;
     }
   }
