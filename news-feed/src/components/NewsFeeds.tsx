@@ -6,25 +6,32 @@ interface prop {
     date:Date;
     setDay:React.Dispatch<React.SetStateAction<Date>>;
     newsCard:Feed,
-    setNewsCard:React.Dispatch<React.SetStateAction<Feed>>
+    setNewsCard:React.Dispatch<React.SetStateAction<Feed>>,
+    more:number,
+    setMore:React.Dispatch<React.SetStateAction<number>>
 }
 
 var db: Feed[][] = [];
 const s3 = 'https://blognewsarticles.s3.us-east-2.amazonaws.com/';
-const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard}) => {
+var count = 0;
+
+const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, setMore}) => {
     const [jsonData, setJsonData] = useState<any | null>(null);
     useEffect(() => {
         async function fetchData() {
         var wantedDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
-        console.log(wantedDate);
           try {
+            if (count!==more) { //due to async calling effects multiple times at once
+                return;
+            }
+            count += 1;
             const url = s3 + wantedDate
             const response = await fetch(url);
-            console.log(response);
+            
             if (response.ok) {
                 const data = await response.json()
                 if (data.length > 0) {
-                    console.log(data.length);
+                    //console.log(data.length);
                     db.push(data);
                     setJsonData(data);
                 } else { //when you are at next day and there are no new articles
@@ -57,6 +64,18 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard}) => {
                     setJsonData(data);
             }
         }
+        //Set default NewsCard
+        if (db.length > 0) {
+            const first = db[0].map((feed:Feed,index) => {
+                if (index===0) {
+                    return feed;
+                } else {
+                    return;
+                }
+            });
+            const newsCard_first:Feed= first[0]!;
+            setNewsCard(newsCard_first);
+        };
           } catch (error) {
             console.error('Error fetching JSON:', error);
           }
@@ -64,18 +83,20 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard}) => {
     
         fetchData();
       }, [date]);
-    
-    
+      
     const loadMore = () => {
         const newDate = new Date();
         newDate.setDate(date.getDate()-1);
         setDay(newDate);
+        setMore((more)=>more+1);
     }
     const renderItems = (db: Feed[][]) => {
+        
         const elements = []
         for (let i = 0; i < db.length ;i++) {
+
             elements.push(db[i].map((feed: Feed) => (
-                <SingleFeed feed={feed} date={date} newsCard={newsCard} setNewsCard={setNewsCard}/>))
+                <SingleFeed key={feed.id} feed={feed} date={date} newsCard={newsCard} setNewsCard={setNewsCard} more={more} setMore={setMore}/>))
             )
         }
         return elements
@@ -90,5 +111,4 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard}) => {
 }
 
 export default NewsFeeds
-
 

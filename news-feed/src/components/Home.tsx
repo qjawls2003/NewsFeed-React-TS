@@ -16,15 +16,14 @@ const defaultFeed: Feed = {
 const Home:React.FC = () => {
     const [date,setDay] = useState<Date>(new Date());
     const [newsCard, setNewsCard] =useState<Feed>(defaultFeed);
-  
+    const [more, setMore] = useState<number>(0);
     useEffect(() => {
       console.log('Date has been updated:', date);
     }, [date]);
-  
     return (
     <div className="container">
         <div className='column'>
-            <NewsFeeds date={date} setDay={setDay} newsCard={newsCard} setNewsCard={setNewsCard}/>
+            <NewsFeeds date={date} setDay={setDay} newsCard={newsCard} setNewsCard={setNewsCard} more={more} setMore={setMore}/>
         </div>
         <div className='column'>
             <NewsCard newsCard={newsCard} setNewsCard={setNewsCard}/>

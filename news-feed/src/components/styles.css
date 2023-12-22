@@ -14,7 +14,7 @@
 .items__list {
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
     font-size: 24px;
     color: #333;
     float:left;
@@ -153,6 +153,7 @@
     }
     .column {
         margin-top: 0;
+        padding: 25px;
     }
     .news-image {
         width: 100px; 

@@ -5,10 +5,12 @@ interface props {
     feed:Feed,
     date:Date,
     newsCard:Feed,
-    setNewsCard:React.Dispatch<React.SetStateAction<Feed>>
+    setNewsCard:React.Dispatch<React.SetStateAction<Feed>>,
+    more:number,
+    setMore:React.Dispatch<React.SetStateAction<number>>
 }
 
-const SingleFeed:React.FC<props> = ({feed,date, newsCard, setNewsCard}) => {
+const SingleFeed:React.FC<props> = ({feed,date, newsCard, setNewsCard,more,setMore}) => {
   
 
   const displayNewsCard = () => {
