@@ -17,6 +17,7 @@ const Home:React.FC = () => {
     const [date,setDay] = useState<Date>(new Date());
     const [newsCard, setNewsCard] =useState<Feed>(defaultFeed);
     const [more, setMore] = useState<number>(0);
+    
     useEffect(() => {
       console.log('Date has been updated:', date);
     }, [date]);
