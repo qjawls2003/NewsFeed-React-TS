@@ -19,7 +19,7 @@ const Home:React.FC = () => {
     const [more, setMore] = useState<number>(0);
     
     useEffect(() => {
-      console.log('Date has been updated:', date);
+      //console.log('Date has been updated:', date);
     }, [date]);
     
     return (

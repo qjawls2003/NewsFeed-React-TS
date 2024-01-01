@@ -24,5 +24,5 @@
   "include": [
     "src/*/*",
     "src/component/content/*.json"
-  ]
+, "src/NewsFeeds_org.tsx"  ]
 }

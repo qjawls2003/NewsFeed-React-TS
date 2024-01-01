@@ -1,6 +1,6 @@
 import React , { useEffect, useState, useRef } from 'react'
-import { Feed } from '../model';
-import SingleFeed from './SingleFeed';
+import { Feed } from './model';
+import SingleFeed from './components/SingleFeed';
 
 interface prop {
     date:Date;
@@ -12,46 +12,62 @@ interface prop {
 }
 
 var db: Feed[][] = [];
-const s3:string = 'https://blognewsarticles.s3.us-east-2.amazonaws.com/';
-var count:number  = 0;
-var itemCount:number  = 0;
-var batch:number  = 8;
-var loaded:boolean = false;
+const s3 = 'https://blognewsarticles.s3.us-east-2.amazonaws.com/';
+var count = 0;
+var itemCount = 0;
 
 const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, setMore}) => {
     const [jsonData, setJsonData] = useState<any | null>(null);
     const loadMorebutton = useRef<HTMLButtonElement>(null);
-
-    const countDB = (dataLen:number) => {
-        itemCount = itemCount + dataLen;
-    }
     useEffect(() => {
         async function fetchData() {
+        var wantedDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
           try {
             if (count!==more) { //due to async calling effects multiple times at once
                 return;
             }
-                var wantedDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
-                count += 1;
-                const url = s3 + wantedDate
-                const response = await fetch(url);
+            count += 1;
+            const url = s3 + wantedDate
+            const response = await fetch(url);
+            
+            if (response.ok) {
                 const data = await response.json()
                 if (data.length > 0) {
+                    //console.log(data.length);
                     db.push(data);
                     setJsonData(data);
-                    countDB(data.length);
-                } 
-                if (itemCount < batch) {
-                    const newDate = new Date(date);
-                    newDate.setDate(date.getDate()-1);
-                    setDay(newDate);
-                    setMore((more)=>more+1);
-                } else {
-                    loaded = true;
+                } else { //when you are at next day and there are no new articles
+                    console.log("Today not Found")
+                    const curDate = new Date();
+                    curDate.setDate(date.getDate()-1);
+                    const yesterday = curDate.getFullYear() + "-" + (curDate.getMonth()+1) + "-" + curDate.getDate();
+                    const url = s3 + yesterday
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        const data = await response.json()
+                        db.push(data);
+                        setJsonData(data);
                 }
-
+            } 
+            } else {
+                console.log("Today not Found")
+                const curDate = new Date();
+                curDate.setDate(date.getDate()-1);
+                const yesterday = curDate.getFullYear() + "-" + (curDate.getMonth()+1) + "-" + curDate.getDate();
+                const url = s3 + yesterday
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json()
+                    db.push(data);
+                    setJsonData(data);
+            }
+        }
+        //when there are too few items for today
+        while (count === 1 && db[0].length < 5) {
+            loadMorebutton.current?.click();
+        }
         //Set default NewsCard
-        if (db.length > 0 && !loaded) {
+        if (db.length > 0) {
             const first = db[0].map((feed:Feed,index) => {
                 if (index===0) {
                     return feed;
@@ -73,15 +89,17 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
 
     var clickCount = 0;
     const loadMore = () => {
-        batch = batch + 8;
-        const newDate = new Date(date);
+        const newDate = new Date();
         newDate.setDate(date.getDate()-1);
         setDay(newDate);
         setMore((more)=>more+1);
+        clickCount++
     }
     const renderItems = (db: Feed[][]) => {
+        itemCount = 0;
         const elements = []
         for (let i = 0; i < db.length ;i++) {
+            itemCount = itemCount + db[i].length;
             elements.push(db[i].map((feed: Feed) => (
                 <SingleFeed key={feed.id} feed={feed} date={date} newsCard={newsCard} setNewsCard={setNewsCard} more={more} setMore={setMore}/>))
             )
