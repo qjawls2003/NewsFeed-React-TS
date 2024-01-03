@@ -1,20 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
-
 .container {
     display: flex;
+    margin-top: 10px;
   }
 
 .column {
     flex: 1;
     padding: 20px;
-    margin-top: 100px;
 }
+
+.top__search {
+    padding-top:120px;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.search__input {
+    font-size: 1.8vh;
+    background-color: #f4f2f2;
+    border: none;
+    outline: none;
+    color: #171616;
+    padding: 0.8rem 1.2rem;
+    border-radius: 40px;
+    width: 40vw;
+    margin-top: 1.5vh;
+    height: 3vh;
+    transition: 0.5s;
+    font-family: "Oswald";
+    }
+
+.search__input::placeholder {
+    color: #646464;
+    opacity: 45%;
+    padding-left: 3px;
+    }
+
+.search__input:hover, .search__input:focus {
+    box-shadow: 0px 3px 10px -1px rgba(0, 0, 0, 0.3);
+    }
+
+.search__button {
+    position: relative;
+    border: none;
+    background-color: #f4f2f2;
+    left: -3.5vw;
+    top: 0.6vh;
+    }
+
+.search__button:hover {
+    cursor: pointer;
+    }
+
+.search__icon {
+    position: relative;
+    height: 2.5vh;
+    background: transparent;
+    }
 
 .column__card {
     flex: 1;
     padding: 20px;
-    margin-top: 100px;
+
 }
 
 .items__list {
@@ -160,7 +210,7 @@
         flex-direction: column;
     }
     .column {
-        margin-top: 18%;
+        margin-top: 1%;
         padding: 0;
         border-bottom: 1px double #cfcbcb;;
     }
@@ -223,4 +273,11 @@
     .read-more-btn {
         margin-top: 50%;
     }
+    .search__button {
+        position: relative;
+        border: none;
+        background-color: #f4f2f2;
+        left: -10.5vw;
+        top: 0.6vh;
+        }
   }

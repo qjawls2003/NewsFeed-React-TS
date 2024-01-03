@@ -8,23 +8,22 @@ interface prop {
     newsCard:Feed,
     setNewsCard:React.Dispatch<React.SetStateAction<Feed>>,
     more:number,
-    setMore:React.Dispatch<React.SetStateAction<number>>
+    setMore:React.Dispatch<React.SetStateAction<number>>,
+    db:Feed[][],
+    setdb: React.Dispatch<React.SetStateAction<Feed[][]>>
 }
 
-var db: Feed[][] = [];
-const s3:string = 'https://blognewsarticles.s3.us-east-2.amazonaws.com/';
+var newdb: Feed[][] = [];
+const s3:string = 'https://etracingnews.s3.us-east-1.amazonaws.com/';
 var count:number  = 0;
 var itemCount:number  = 0;
 var batch:number  = 8;
 var loaded:boolean = false;
 
-const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, setMore}) => {
+const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, setMore, db, setdb}) => {
     const [jsonData, setJsonData] = useState<any | null>(null);
     const loadMorebutton = useRef<HTMLButtonElement>(null);
 
-    const countDB = (dataLen:number) => {
-        itemCount = itemCount + dataLen;
-    }
     useEffect(() => {
         async function fetchData() {
           try {
@@ -37,11 +36,12 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                 const response = await fetch(url);
                 const data = await response.json()
                 if (data.length > 0) {
-                    db.push(data);
+                    newdb.push(data);
+                    setdb(newdb)
                     setJsonData(data);
-                    countDB(data.length);
+                    itemCount = itemCount + data.length;
                 } 
-                if (itemCount < batch) {
+                if (itemCount < batch) { //this will loop until condition is met due to useEffect and changes in the date state.
                     const newDate = new Date(date);
                     newDate.setDate(date.getDate()-1);
                     setDay(newDate);
@@ -50,7 +50,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                     loaded = true;
                 }
 
-        //Set default NewsCard
+        //Set default NewsCard only the first time the page is loaded
         if (db.length > 0 && !loaded) {
             const first = db[0].map((feed:Feed,index) => {
                 if (index===0) {
@@ -71,14 +71,16 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
         fetchData();
       }, [date]);
 
-    var clickCount = 0;
     const loadMore = () => {
         batch = batch + 8;
         const newDate = new Date(date);
         newDate.setDate(date.getDate()-1);
+        setdb(db);
         setDay(newDate);
         setMore((more)=>more+1);
     }
+
+
     const renderItems = (db: Feed[][]) => {
         const elements = []
         for (let i = 0; i < db.length ;i++) {
@@ -89,7 +91,6 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
         
         return elements
     }
-    
     
     return (
         <div className='items__list'>
