@@ -37,31 +37,36 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                 const data = await response.json()
                 if (data.length > 0) {
                     newdb.push(data);
+                    if (!loaded) {
+                        const first = newdb[0].map((feed:Feed,index) => {
+                            if (index===0) {
+                                return feed;
+                            } else {
+                                return;
+                            }
+                        });
+                        loaded = true;
+                        const newsCard_first:Feed= first[0]!;
+                        setNewsCard(newsCard_first);
+                    }; 
                     setdb(newdb)
                     setJsonData(data);
                     itemCount = itemCount + data.length;
-                } 
+                }
+                
+            
                 if (itemCount < batch) { //this will loop until condition is met due to useEffect and changes in the date state.
                     const newDate = new Date(date);
                     newDate.setDate(date.getDate()-1);
                     setDay(newDate);
                     setMore((more)=>more+1);
-                } else {
-                    loaded = true;
                 }
+                
+                
 
         //Set default NewsCard only the first time the page is loaded
-        if (db.length > 0 && !loaded) {
-            const first = db[0].map((feed:Feed,index) => {
-                if (index===0) {
-                    return feed;
-                } else {
-                    return;
-                }
-            });
-            const newsCard_first:Feed= first[0]!;
-            setNewsCard(newsCard_first);
-        };
+        
+        
         
           } catch (error) {
             console.error('Error fetching JSON:', error);
@@ -80,9 +85,13 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
         setMore((more)=>more+1);
     }
 
+    const setDefault = () => {
+        
+    }
 
     const renderItems = (db: Feed[][]) => {
         const elements = []
+        
         for (let i = 0; i < db.length ;i++) {
             elements.push(db[i].map((feed: Feed) => (
                 <SingleFeed key={feed.id} feed={feed} date={date} newsCard={newsCard} setNewsCard={setNewsCard} more={more} setMore={setMore}/>))
