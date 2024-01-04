@@ -209,18 +209,19 @@
   @media (max-width: 768px) {
     .container {
         flex-direction: column;
+        overflow-y:hidden;
         margin-top: 0;
     }
     .column {
         margin-top: 1%;
         padding: 0;
-        overflow-anchor: auto;
+        overflow-y:hidden;
         
     }
     .column__card {
         margin-top: 0%;
         padding-top: 0;
-        overflow-y: auto;
+        overflow-y:auto;
     }
     .news-image {
         width: 120px; 
