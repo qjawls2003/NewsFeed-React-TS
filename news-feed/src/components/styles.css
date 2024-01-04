@@ -209,15 +209,18 @@
   @media (max-width: 768px) {
     .container {
         flex-direction: column;
+        overflow-y: auto;
+        margin-top: 0;
     }
     .column {
         margin-top: 1%;
         padding: 0;
-        border-bottom: 1px double #cfcbcb;;
+        overflow-anchor: auto;
+        
     }
     .column__card {
-        margin-top: 10%;
-        border-top: 1px double #cfcbcb;;
+        margin-top: 0%;
+        padding-top: 0;
         overflow-y: auto;
     }
     .news-image {
@@ -282,6 +285,10 @@
         top: 0.6vh;
         }
     .top__search {
-        padding-top:20%;
+        padding-top:23%;
+    }
+    .search__input {
+        width: 50%;
+        margin-left: 10%;
     }
   }
