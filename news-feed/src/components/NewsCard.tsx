@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect,useRef} from 'react'
 import { Feed } from '../model';
 
 interface prop {
@@ -7,7 +7,12 @@ interface prop {
 }
 
 const NewsCard: React.FC<prop> = ({newsCard,setNewsCard}) => {
-    
+  const cardRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+      if (cardRef.current) {
+        cardRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, [newsCard]);
 
     const handleClick = () => {
         const newWindow = window.open(newsCard.source, '_blank');
@@ -17,7 +22,7 @@ const NewsCard: React.FC<prop> = ({newsCard,setNewsCard}) => {
       };
 
     return (
-        <div className='news__card' onClick={handleClick}>
+        <div ref={cardRef} className='news__card' onClick={handleClick}>
           <h2 className='card__title'>{newsCard.title}</h2>
           <p className='card__date'>{newsCard.date_published}</p>
           <img className="card__image"  src={newsCard.imageURL}

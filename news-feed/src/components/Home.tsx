@@ -32,7 +32,7 @@ const Home:React.FC = () => {
     return (
       <div>
           <div className='top__search'>
-          <Search input={input} setInput={setInput} setdb={setdb} setNewsCard={setNewsCard} setSearched={setSearched} setLoading={setLoading}/>
+          <Search input={input} setInput={setInput} setdb={setdb} setNewsCard={setNewsCard} setSearched={setSearched} setLoading={setLoading} loading={loading}/>
           </div>
         <div className="container">
         <div className='column'>

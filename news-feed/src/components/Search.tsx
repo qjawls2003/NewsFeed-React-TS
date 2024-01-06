@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Feed } from '../model';
 
 interface prop {
@@ -7,12 +7,13 @@ interface prop {
     setdb: React.Dispatch<React.SetStateAction<Feed[][]>>,
     setNewsCard: React.Dispatch<React.SetStateAction<Feed>>,
     setSearched: React.Dispatch<React.SetStateAction<boolean>>,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    loading: boolean
   }
 var newdb:Feed[][] = [];
 var loaded:boolean = false;
 
-const Search: React.FC<prop> = ({input,setInput,setdb,setNewsCard, setSearched, setLoading}) => {
+const Search: React.FC<prop> = ({input,setInput,setdb,setNewsCard, setSearched, setLoading, loading}) => {
     const placeholder = "Perform a Vector Search";
     const url = "https://etracingnews.com/search/"
     const controllerRef = useRef(new AbortController());
@@ -76,8 +77,7 @@ const Search: React.FC<prop> = ({input,setInput,setdb,setNewsCard, setSearched, 
 
     return (
         <div className='search'>
-            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-            <form onSubmit={handleSubmit} className='transparent'>
+            {!loading ? (<form onSubmit={handleSubmit} className='transparent'>
                 <div>
                     <input
                     className="search__input"
@@ -95,7 +95,8 @@ const Search: React.FC<prop> = ({input,setInput,setdb,setNewsCard, setSearched, 
                         </svg>
                     </button>
                 </div>
-             </form>
+             </form>):(null)}
+            
         </div>
         
     )
