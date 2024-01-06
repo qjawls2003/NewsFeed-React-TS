@@ -5,33 +5,11 @@ interface props {
     feed:Feed,
     setNewsCard:React.Dispatch<React.SetStateAction<Feed>>,
     searched: boolean,
-    last: boolean,
-    count:number,
-    re: boolean,
-    setRe: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const SingleFeed:React.FC<props> = ({feed,setNewsCard,searched,last,count,re, setRe}) => {
+const SingleFeed:React.FC<props> = ({feed,setNewsCard,searched}) => {
   const div = useRef<HTMLDivElement | null>(null);
 
-  useEffect(()=> {
-    
-    const wait = async () => {
-      try {
-        if (div.current && last && !re) {
-          await new Promise(resolve => setTimeout(resolve, 600));
-          window.scrollTo({ top: window.scrollY+count*100, behavior: 'smooth' });
-        }
-        
-      } catch (error) {
-        return;
-      }
-    }
-    wait();
-    
-    
-
-  },[count,last]);
 
   const displayNewsCard = () => {
     setNewsCard(feed);

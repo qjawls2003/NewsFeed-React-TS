@@ -93,7 +93,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
         }
     }
 
-    const loadMore = () => {
+    const loadMore = async () => {
         batch = batch + 8;
         const newDate = new Date(date);
         newDate.setDate(date.getDate()-1);
@@ -101,6 +101,8 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
         setDay(newDate);
         setMore((more)=>more+1);
         prev_count = db.length;
+        await new Promise(resolve => setTimeout(resolve, 500));
+        window.scrollTo({ top: window.scrollY+1000, behavior: 'smooth' });
     }
 
     const reload = async () => {
@@ -134,7 +136,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                 } else if (index===0 && index < db[i].length) {
                     last = false
                 } 
-                return <SingleFeed key={feed.id} feed={feed} setNewsCard={setNewsCard} searched={searched} last={last} count={len_count} re={re} setRe={setRe}/>
+                return <SingleFeed key={feed.id} feed={feed} setNewsCard={setNewsCard} searched={searched}/>
             }
           )
          )
