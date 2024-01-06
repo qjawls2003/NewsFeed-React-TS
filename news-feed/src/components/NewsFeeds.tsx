@@ -148,22 +148,19 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
         <div>
             <div className='items__list'>
                 {renderItems(db)}
+                <div className='button'>
+                    {!searched && !loading ? (
+                        <button className='read-more-btn' ref={loadMorebutton} onClick={loadMore}>More Stories</button> 
+                    ) :(null)
+                    }
+                    {searched && !loading ? (
+                        <button className='read-more-btn' ref={reloadbutton} onClick={reload}>Reload Stories</button>
+                    ) :(null)
+                    } 
+                    { loading ? (<p>Loading...</p>) : (null) }
+                </div>
             </div>
-        <div>
-            {!searched && !loading ? (
-                <button className='read-more-btn' ref={loadMorebutton} onClick={loadMore}>More Stories</button> 
-            ) :(
-                null
-            )
-            }
-            {searched && !loading ? (
-                <button className='read-more-btn' ref={reloadbutton} onClick={reload}>Reload Stories</button>
-            ) :(
-                null
-            )
-            } 
-            { loading ? (<p>Loading...</p>) : (null) }
-        </div>
+        
         </div>
        
 

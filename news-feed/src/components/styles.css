@@ -200,6 +200,12 @@
     align-items: center;
   }
   
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45vw;
+  }
   .read-more-btn:hover {
     background-color: #e2e5e7;
   }
@@ -227,6 +233,7 @@
         padding-top: 0;
         overflow-y:auto;
     }
+
     .news-image {
         width: 120px; 
         height: 70px; 
@@ -242,6 +249,8 @@
     }
     .news-date {
         font-size: 12px;
+        margin-top: 0%;
+        margin-bottom: 0%;
     }
     .items__list {
         margin-top: 5%;
@@ -280,7 +289,8 @@
         font-size: 0;
     }
     .read-more-btn {
-        margin-top: 50%;
+        justify-content:right;
+        align-items: right;
     }
     .search__button {
         position: relative;
