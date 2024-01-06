@@ -141,7 +141,8 @@
     max-height: 100%;
     object-fit: cover;
     border-radius: 4px;
-    margin-right: 16px; 
+    margin-right: 16px;
+    image-rendering: optimizeSpeed; 
 }
 
 .card__image {
@@ -153,6 +154,7 @@
     object-fit: cover;
     border-radius: 4px;
     margin-right: 16px; 
+    image-rendering: optimizeSpeed; 
 }
 
 .news-details {
@@ -194,6 +196,8 @@
     transition: background-color 0.3s ease;
     font-size: 20px;
     font-family: 'Oswald';
+    justify-content: center;
+    align-items: center;
   }
   
   .read-more-btn:hover {

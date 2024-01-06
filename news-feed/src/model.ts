@@ -5,4 +5,5 @@ export interface Feed {
     article: string;
     imageURL:string;
     source:string;
+    score:number;
   }

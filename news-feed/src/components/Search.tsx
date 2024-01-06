@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Feed } from '../model';
 
 interface prop {
     input:string,
     setInput:React.Dispatch<React.SetStateAction<string>>,
-    db:Feed[][],
-    setdb: React.Dispatch<React.SetStateAction<Feed[][]>>
+    setdb: React.Dispatch<React.SetStateAction<Feed[][]>>,
+    setNewsCard: React.Dispatch<React.SetStateAction<Feed>>,
+    setSearched: React.Dispatch<React.SetStateAction<boolean>>,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
   }
-const Search: React.FC<prop> = ({input,setInput,db,setdb}) => {
-    const placeholder = "Work in progress...";
+var newdb:Feed[][] = [];
+var loaded:boolean = false;
 
+const Search: React.FC<prop> = ({input,setInput,setdb,setNewsCard, setSearched, setLoading}) => {
+    const placeholder = "Perform a Vector Search";
+    const url = "https://etracingnews.com/search/"
+    const controllerRef = useRef(new AbortController());
+    
     const handleSubmit = (event: any | undefined) => {
         event.preventDefault(); // Preventing the default form submission behavior
         submitResponse(input);
@@ -24,6 +31,47 @@ const Search: React.FC<prop> = ({input,setInput,db,setdb}) => {
         console.log(input);
         //setdb([]);
         setInput(""); //restore search box to default
+        setLoading(true);
+        setdb([]);
+        try {
+            const response = await fetch(url,
+                {
+                    method: 'POST',
+                    headers:new Headers({
+                        'Content-Type': 'application/json'
+                    }),
+                    body: JSON.stringify({"query": input}),
+                    signal: controllerRef.current.signal
+                });
+            const data = await response.json()
+                if (data.length > 0) {
+                    setSearched(true);
+                    const sorted_data_list = JSON.parse(data)
+                    const sorted_data = sorted_data_list.sort((a:any,b:any) => b.score - a.score)
+                    newdb.push(sorted_data);
+                    if (!loaded) {
+                        const first = newdb[0].map((feed:Feed,index) => {
+                            if (index===0) {
+                                return feed;
+                            } else {
+                                return;
+                            }
+                        });
+                        loaded = true;
+                        const newsCard_first:Feed= first[0]!;
+                        setNewsCard(newsCard_first);
+                    }; 
+                    setdb(newdb)
+                }
+                setLoading(false);
+                newdb = [];
+        } catch (error) {
+            if (error === 'AbortError') {
+                console.log('Request was aborted');
+              } else {
+                console.error('Error fetching data:', error);
+              }
+            }
       }
 
     return (

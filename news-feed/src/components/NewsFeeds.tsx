@@ -10,25 +10,47 @@ interface prop {
     more:number,
     setMore:React.Dispatch<React.SetStateAction<number>>,
     db:Feed[][],
-    setdb: React.Dispatch<React.SetStateAction<Feed[][]>>
+    setdb: React.Dispatch<React.SetStateAction<Feed[][]>>,
+    searched: boolean,
+    setSearched: React.Dispatch<React.SetStateAction<boolean>>,
+    loading: boolean
 }
 
 var newdb: Feed[][] = [];
 const s3:string = 'https://etracingnews.s3.us-east-1.amazonaws.com/';
 var count:number  = 0;
+var prev_count:number = 0;
 var itemCount:number  = 0;
 var batch:number  = 8;
 var loaded:boolean = false;
 
-const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, setMore, db, setdb}) => {
+const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, setMore, db, setdb, searched, setSearched, loading}) => {
     const [jsonData, setJsonData] = useState<any | null>(null);
     const loadMorebutton = useRef<HTMLButtonElement>(null);
+    const reloadbutton = useRef<HTMLButtonElement>(null);
+    const [re, setRe] = useState(false);
 
     useEffect(() => {
-        async function fetchData() {
-          try {
+        //console.log("called")
+        fetchData();
+      }, [date]);
+
+    const fetchData = async () => {
+        try {
             if (count!==more) { //due to async calling effects multiple times at once
                 return;
+            }
+            //console.log(re)
+            if (re) {
+                count = 0
+                prev_count = 0
+                itemCount = 0
+                batch = 8
+                setMore(0)
+                newdb=[];
+                setdb([]);
+                setJsonData(null);
+                setRe(false);
             }
                 var wantedDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
                 count += 1;
@@ -38,6 +60,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                 if (data.length > 0) {
                     newdb.push(data);
                     if (!loaded) {
+                        //Set default NewsCard only the first time the page is loaded
                         const first = newdb[0].map((feed:Feed,index) => {
                             if (index===0) {
                                 return feed;
@@ -54,7 +77,6 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                     itemCount = itemCount + data.length;
                 }
                 
-            
                 if (itemCount < batch) { //this will loop until condition is met due to useEffect and changes in the date state.
                     const newDate = new Date(date);
                     newDate.setDate(date.getDate()-1);
@@ -62,19 +84,12 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                     setMore((more)=>more+1);
                 }
                 
-                
 
-        //Set default NewsCard only the first time the page is loaded
-        
-        
-        
-          } catch (error) {
+                
+        } catch (error) {
             console.error('Error fetching JSON:', error);
-          }
         }
-    
-        fetchData();
-      }, [date]);
+    }
 
     const loadMore = () => {
         batch = batch + 8;
@@ -83,29 +98,66 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
         setdb(db);
         setDay(newDate);
         setMore((more)=>more+1);
+        prev_count = db.length;
     }
 
-    const setDefault = () => {
-        
+    const reload = async () => {
+        setdb([]);
+        setSearched(false);
+        const newDate = new Date();
+        setDay(newDate);
+        setRe(true);
+        count -= 1;
+        await new Promise(resolve => setTimeout(resolve, 500));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
 
     const renderItems = (db: Feed[][]) => {
         const elements = []
-        
+        //console.log(db, count, more)
+        var len_count  = 0
         for (let i = 0; i < db.length ;i++) {
-            elements.push(db[i].map((feed: Feed) => (
-                <SingleFeed key={feed.id} feed={feed} date={date} newsCard={newsCard} setNewsCard={setNewsCard} more={more} setMore={setMore}/>))
-            )
+            const diff = count - prev_count
+            if (i >= prev_count) {
+                len_count += db[i].length
+            }
+            
+            elements.push(db[i].map((feed: Feed,index) => {
+                var last = false; 
+                if  (i===0){
+                    last = false
+                } else if (index === db[i].length-1){
+                    last = true
+                } else if (index===0 && index < db[i].length) {
+                    last = false
+                } 
+                return <SingleFeed key={feed.id} feed={feed} setNewsCard={setNewsCard} searched={searched} last={last} count={len_count} re={re} setRe={setRe}/>
+            }
+          )
+         )
         }
+        
         
         return elements
     }
     
     return (
-        <div className='items__list'>
-        {renderItems(db)}
-        <button className='read-more-btn' ref={loadMorebutton} onClick={loadMore}>More Stories</button>
+        <div>
+            <div className='items__list'>
+                {renderItems(db)}
+            </div>
+        <div>
+            {!searched ? (
+                <button className='read-more-btn' ref={loadMorebutton} onClick={loadMore}>More Stories</button> 
+            ) :(
+                <button className='read-more-btn' ref={reloadbutton} onClick={reload}>Reload Stories</button>
+            )
+            }
         </div>
+        </div>
+       
+
   )
 }
 

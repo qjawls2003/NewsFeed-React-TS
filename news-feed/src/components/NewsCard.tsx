@@ -28,7 +28,6 @@ const NewsCard: React.FC<prop> = ({newsCard,setNewsCard}) => {
               }}
           />
           <p className='news__card__summary'>{newsCard.article}</p>
-          
         </div>
   )
 }
