@@ -76,6 +76,7 @@ const Search: React.FC<prop> = ({input,setInput,setdb,setNewsCard, setSearched, 
 
     return (
         <div className='search'>
+            <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
             <form onSubmit={handleSubmit} className='transparent'>
                 <div>
                     <input
