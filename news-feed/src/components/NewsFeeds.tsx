@@ -13,7 +13,8 @@ interface prop {
     setdb: React.Dispatch<React.SetStateAction<Feed[][]>>,
     searched: boolean,
     setSearched: React.Dispatch<React.SetStateAction<boolean>>,
-    loading: boolean
+    loading: boolean,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 var newdb: Feed[][] = [];
@@ -24,7 +25,7 @@ var itemCount:number  = 0;
 var batch:number  = 8;
 var loaded:boolean = false;
 
-const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, setMore, db, setdb, searched, setSearched, loading}) => {
+const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, setMore, db, setdb, searched, setSearched, loading, setLoading}) => {
     const [jsonData, setJsonData] = useState<any | null>(null);
     const loadMorebutton = useRef<HTMLButtonElement>(null);
     const reloadbutton = useRef<HTMLButtonElement>(null);
@@ -40,6 +41,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
             if (count!==more) { //due to async calling effects multiple times at once
                 return;
             }
+            setLoading(true);
             //console.log(re)
             if (re) {
                 count = 0
@@ -84,7 +86,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                     setMore((more)=>more+1);
                 }
                 
-
+                setLoading(false);
                 
         } catch (error) {
             console.error('Error fetching JSON:', error);
@@ -148,12 +150,19 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                 {renderItems(db)}
             </div>
         <div>
-            {!searched ? (
+            {!searched && !loading ? (
                 <button className='read-more-btn' ref={loadMorebutton} onClick={loadMore}>More Stories</button> 
             ) :(
-                <button className='read-more-btn' ref={reloadbutton} onClick={reload}>Reload Stories</button>
+                null
             )
             }
+            {searched && !loading ? (
+                <button className='read-more-btn' ref={reloadbutton} onClick={reload}>Reload Stories</button>
+            ) :(
+                null
+            )
+            } 
+            { loading ? (<p>Loading...</p>) : (null) }
         </div>
         </div>
        

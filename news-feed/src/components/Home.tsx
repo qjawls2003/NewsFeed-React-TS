@@ -36,7 +36,7 @@ const Home:React.FC = () => {
           </div>
         <div className="container">
         <div className='column'>
-            <NewsFeeds date={date} setDay={setDay} newsCard={newsCard} setNewsCard={setNewsCard} more={more} setMore={setMore} db={db} setdb ={setdb} searched={searched} setSearched={setSearched} loading={loading}/>
+            <NewsFeeds date={date} setDay={setDay} newsCard={newsCard} setNewsCard={setNewsCard} more={more} setMore={setMore} db={db} setdb ={setdb} searched={searched} setSearched={setSearched} loading={loading} setLoading={setLoading}/>
         </div>
         <div className='column__card'>
             <NewsCard newsCard={newsCard} setNewsCard={setNewsCard}/>
