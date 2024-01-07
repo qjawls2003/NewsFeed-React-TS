@@ -94,12 +94,11 @@
     cursor: pointer;
     overflow:auto;
     transition: 0.5s;
-    background-color: #f8f8f8;
+    background-color: #ffffff;
 }
 
 .card__title {
     font-family: 'Oswald';
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .card__date {
@@ -118,7 +117,6 @@
     letter-spacing: 0.5px;
     text-indent: 20px;
     hyphens: auto;
-    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
     
 }
 
@@ -187,7 +185,6 @@
     font-weight: bold;
     color: #333;
     margin-bottom: 8px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .news-date {
@@ -253,7 +250,6 @@
     .news-title {
         font-size: 15px;
         overflow-wrap: normal;
-        text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
     }
     .news-summary {
         margin-right: 10px;
@@ -286,7 +282,6 @@
     .card__title {
         font-size: 15px;
         padding: 10px;
-        text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.3);
     }
     .news__card__summary {
         font-size: 15px;
