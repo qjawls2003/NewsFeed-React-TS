@@ -66,7 +66,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                         
                         newDate.setDate(newDate.getDate()-1);
                         wantedDate = newDate.getFullYear() + "-" + (newDate.getMonth()+1) + "-" + newDate.getDate();
-                        if (wantedDate == '2022-7-20') { //earliest article, terminate
+                        if (wantedDate === '2022-7-20') { //earliest article, terminate
                             setEnded(true);
                             return;
                         }
@@ -138,23 +138,9 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
 
     const renderItems = (db: Feed[][]) => {
         const elements = []
-        //console.log(db, count, more)
-        var len_count  = 0
+
         for (let i = 0; i < db.length ;i++) {
-            const diff = count - prev_count
-            if (i >= prev_count) {
-                len_count += db[i].length
-            }
-            
             elements.push(db[i].map((feed: Feed,index) => {
-                var last = false; 
-                if  (i===0){
-                    last = false
-                } else if (index === db[i].length-1){
-                    last = true
-                } else if (index===0 && index < db[i].length) {
-                    last = false
-                } 
                 return <SingleFeed key={feed.id} feed={feed} setNewsCard={setNewsCard} searched={searched}/>
             }
           )
