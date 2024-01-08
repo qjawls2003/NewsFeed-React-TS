@@ -30,6 +30,8 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
     const loadMorebutton = useRef<HTMLButtonElement>(null);
     const reloadbutton = useRef<HTMLButtonElement>(null);
     const [re, setRe] = useState(false);
+    const [ended, setEnded] = useState(false);
+    
 
     useEffect(() => {
         //console.log("called")
@@ -56,8 +58,24 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
             }
                 var wantedDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
                 count += 1;
-                const url = s3 + wantedDate
-                const response = await fetch(url);
+                var url = s3 + wantedDate
+                var response = await fetch(url);
+                if (!response.ok) {
+                    var newDate = new Date(date);
+                    while (response.status === 403) {
+                        
+                        newDate.setDate(newDate.getDate()-1);
+                        wantedDate = newDate.getFullYear() + "-" + (newDate.getMonth()+1) + "-" + newDate.getDate();
+                        if (wantedDate == '2022-7-20') { //earliest article, terminate
+                            setEnded(true);
+                            return;
+                        }
+                        url = s3 + wantedDate
+                        response = await fetch(url);
+                    }
+                    date = newDate;
+                    setDay(newDate);            
+                }
                 const data = await response.json()
                 if (data.length > 0) {
                     newdb.push(data);
@@ -89,7 +107,8 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                 setLoading(false);
                 
         } catch (error) {
-            console.error('Error fetching JSON:', error);
+            //console.error('Error fetching JSON:', error);
+            
         }
     }
 
@@ -159,7 +178,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                         <button className='read-more-btn' ref={reloadbutton} onClick={reload}>Reload Stories</button>
                     ) :(null)
                     } 
-                    { loading ? (<p>Loading...</p>) : (null) }
+                    { loading && !ended ? (<p>Loading...</p>) : (null) }
                 </div>
             </div>
         
