@@ -29,6 +29,7 @@ const Search: React.FC<prop> = ({input,setInput,setdb,setNewsCard, setSearched, 
       };
     
       const submitResponse = async (input:string) => {
+        loaded = false;
         console.log(input);
         //setdb([]);
         setInput(""); //restore search box to default
@@ -50,6 +51,7 @@ const Search: React.FC<prop> = ({input,setInput,setdb,setNewsCard, setSearched, 
                     const sorted_data_list = JSON.parse(data)
                     const sorted_data = sorted_data_list.sort((a:any,b:any) => b.score - a.score)
                     newdb.push(sorted_data);
+                    console.log(loaded);
                     if (!loaded) {
                         const first = newdb[0].map((feed:Feed,index) => {
                             if (index===0) {
