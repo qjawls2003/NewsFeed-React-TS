@@ -66,6 +66,7 @@ const Search: React.FC<prop> = ({input,setInput,setdb,setNewsCard, setSearched, 
                     setdb(newdb)
                 }
                 setLoading(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 newdb = [];
         } catch (error) {
             if (error === 'AbortError') {
