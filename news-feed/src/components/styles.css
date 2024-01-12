@@ -19,9 +19,12 @@
     text-align: center;
     position: fixed;
     width: 100%;
-    z-index: 1
-
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    z-index: 1;
+    padding-bottom: 1.5%;
 }
+
 
 .search__input {
     font-size: 1.8vh;
