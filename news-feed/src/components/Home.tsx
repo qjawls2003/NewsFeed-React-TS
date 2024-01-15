@@ -24,6 +24,21 @@ const Home:React.FC = () => {
     const [input,setInput] = useState<string>("");
     const [searched, setSearched] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+    const [showShadow, setShowShadow] = useState(false);
+
+    const handleScroll = () => {
+    // Set showShadow to true if scrolled down, false if at the top
+      setShowShadow(window.scrollY > 0);
+    };
+
+    useEffect(() => {
+      window.addEventListener('scroll', handleScroll);
+
+      // Cleanup the event listener on component unmount
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
 
     useEffect(() => {
       //console.log('Date has been updated:', date);      
@@ -31,7 +46,7 @@ const Home:React.FC = () => {
 
     return (
       <div>
-          <div className='top__search'>
+          <div className={showShadow ? 'top__search top__search__shadow' : 'top__search'}>
           <Search input={input} setInput={setInput} setdb={setdb} setNewsCard={setNewsCard} setSearched={setSearched} setLoading={setLoading} loading={loading}/>
           </div>
         <div className="container">
@@ -39,10 +54,10 @@ const Home:React.FC = () => {
             <NewsFeeds date={date} setDay={setDay} newsCard={newsCard} setNewsCard={setNewsCard} more={more} setMore={setMore} db={db} setdb ={setdb} searched={searched} setSearched={setSearched} loading={loading} setLoading={setLoading}/>
         </div>
         <div className='column__card'>
-            <NewsCard newsCard={newsCard} setNewsCard={setNewsCard}/>
+            <NewsCard newsCard={newsCard} loading={loading}/>
         </div>
       </div>
-      </div>
+    </div>
     
       
     );

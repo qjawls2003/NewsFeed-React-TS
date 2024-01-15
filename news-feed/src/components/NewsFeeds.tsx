@@ -31,7 +31,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
     const reloadbutton = useRef<HTMLButtonElement>(null);
     const [re, setRe] = useState(false);
     const [ended, setEnded] = useState(false);
-    
+
 
     useEffect(() => {
         //console.log("called")
@@ -43,7 +43,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
             if (count!==more) { //due to async calling effects multiple times at once
                 return;
             }
-            setLoading(true);
+            //setLoading(true);
             //console.log(re)
             if (re) {
                 count = 0
@@ -104,7 +104,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                     setMore((more)=>more+1);
                 }
                 
-                setLoading(false);
+                //setLoading(false);
                 
         } catch (error) {
             //console.error('Error fetching JSON:', error);
@@ -164,7 +164,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
                         <button className='read-more-btn' ref={reloadbutton} onClick={reload}>Reload Stories</button>
                     ) :(null)
                     } 
-                    { loading && !ended ? (<p>Loading...</p>) : (null) }
+                    { loading && !ended ? (<div className='loader'></div>) : (null) }
                 </div>
             </div>
         

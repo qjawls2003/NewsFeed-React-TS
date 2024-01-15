@@ -3,10 +3,10 @@ import { Feed } from '../model';
 
 interface prop {
     newsCard:Feed,
-    setNewsCard:React.Dispatch<React.SetStateAction<Feed>>
+    loading:boolean
 }
 
-const NewsCard: React.FC<prop> = ({newsCard,setNewsCard}) => {
+const NewsCard: React.FC<prop> = ({newsCard, loading}) => {
   const cardRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
       if (cardRef.current) {
@@ -22,18 +22,19 @@ const NewsCard: React.FC<prop> = ({newsCard,setNewsCard}) => {
       };
 
     return (
-        <div ref={cardRef} className='news__card' onClick={handleClick}>
-          <h2 className='card__title'>{newsCard.title}</h2>
-          <p className='card__date'>{newsCard.date_published}</p>
-          <img className="card__image"  src={newsCard.imageURL}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = "etracing.png";
-                target.className = "card__image"
-              }}
-          />
-          <p className='news__card__summary'>{newsCard.article}</p>
-        </div>
+      <div>{!loading ? (<div ref={cardRef} className='news__card' onClick={handleClick}>
+      <h2 className='card__title'>{newsCard.title}</h2>
+      <p className='card__date'>{newsCard.date_published}</p>
+      <img className="card__image"  src={newsCard.imageURL}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "etracing.png";
+            target.className = "card__image"
+          }}
+      />
+      <p className='news__card__summary'>{newsCard.article}</p>
+    </div>) : (<div></div>)}</div>
+        
   )
 }
 export default NewsCard
