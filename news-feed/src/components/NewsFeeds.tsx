@@ -138,7 +138,7 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
 
     const renderItems = (db: Feed[][]) => {
         const elements = []
-
+        
         for (let i = 0; i < db.length ;i++) {
             elements.push(db[i].map((feed: Feed,index) => {
                 return <SingleFeed key={feed.id} feed={feed} setNewsCard={setNewsCard} searched={searched}/>
@@ -156,11 +156,11 @@ const NewsFeeds: React.FC<prop> = ({date,setDay, newsCard, setNewsCard, more, se
             <div className='items__list'>
                 {renderItems(db)}
                 <div className='button'>
-                    {!searched && !loading ? (
+                    {!searched && !loading && loaded ? (
                         <button className='read-more-btn' ref={loadMorebutton} onClick={loadMore}>More Stories</button> 
                     ) :(null)
                     }
-                    {searched && !loading ? (
+                    {searched && !loading && loaded ? (
                         <button className='read-more-btn' ref={reloadbutton} onClick={reload}>Reload Stories</button>
                     ) :(null)
                     } 
