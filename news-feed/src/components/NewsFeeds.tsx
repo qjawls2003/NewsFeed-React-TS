@@ -18,7 +18,7 @@ interface prop {
 }
 
 var newdb: Feed[][] = [];
-const s3:string = 'https://etracingnews.s3.us-east-1.amazonaws.com/';
+const s3:string = 'https://etracingnews.s3.amazonaws.com/';
 var count:number  = 0;
 var prev_count:number = 0;
 var itemCount:number  = 0;
